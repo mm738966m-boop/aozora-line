@@ -147,23 +147,42 @@ h2::after{content:"";position:absolute;left:50%;bottom:8px;transform:translateX(
 .spec2{margin-top:18px;padding-top:15px;border-top:1px dashed var(--line);
   font-size:14px;color:var(--muted);line-height:1.95;font-weight:500}
 
-/* ---- 試し読み ---- */
-.sample{position:relative;background:linear-gradient(180deg,#fffdf7,#fdf8ec);
-  border:1px solid var(--line);border-radius:16px;padding:28px 24px 0;overflow:hidden;
-  box-shadow:0 16px 34px -28px rgba(38,48,74,.6)}
-.sample::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;
-  background:linear-gradient(90deg,rgba(193,151,31,.22),transparent)}
-.sample .ch{font-family:var(--mincho);font-size:14px;color:#a37f14;font-weight:800;
-  letter-spacing:.08em;text-align:center;padding-bottom:16px;margin-bottom:20px;
-  border-bottom:1px solid #efe6cf}
-.sample .body{font-family:var(--mincho);font-size:17.5px;line-height:2.35;color:#1f2942;
+/* ---- 試し読み：本のページに見せる ---- */
+.sample{position:relative;
+  /* 紙の繊維＋ノドから小口へのわずかな陰影＋生成りの紙色 */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"),
+    linear-gradient(90deg, rgba(150,124,66,.13) 0%, rgba(150,124,66,.02) 6%, rgba(0,0,0,0) 14%),
+    linear-gradient(180deg,#fdfaf0,#faf4e4);
+  border:1px solid #e4d9bd;border-radius:2px 5px 5px 2px;
+  padding:26px 24px 0 28px;overflow:hidden;
+  /* 右下に紙の重なり＝本の厚み */
+  box-shadow:
+    3px 3px 0 #f6f0df, 4px 4px 0 #e9e0c6, 7px 7px 0 #f6f0df, 8px 8px 0 #e5dbbe, 11px 11px 0 #f6f0df,
+    0 26px 44px -28px rgba(38,48,74,.55)}
+/* ノド（綴じ側）の影 */
+.sample::before{content:"";position:absolute;left:0;top:0;bottom:0;width:22px;z-index:2;
+  background:linear-gradient(90deg, rgba(120,98,48,.22), rgba(120,98,48,.06) 48%, rgba(0,0,0,0));
+  pointer-events:none}
+
+.runhead{font-family:var(--mincho);font-size:12px;color:#9c8a63;text-align:center;
+  letter-spacing:.16em;font-weight:700;padding-bottom:9px;border-bottom:1px solid #e8dcc0}
+.chapopen{text-align:center;padding:26px 0 22px;margin-bottom:8px}
+.chapopen .cn{font-family:var(--mincho);font-size:13px;color:#a37f14;font-weight:800;
+  letter-spacing:.3em;margin-bottom:9px}
+.chapopen .ct{font-family:var(--mincho);font-size:19px;color:#152342;font-weight:800;
+  line-height:1.7;letter-spacing:.02em}
+.chapopen::after{content:"";display:block;width:34px;height:1px;background:#d8c48a;margin:16px auto 0}
+
+.sample .body{font-family:var(--mincho);font-size:17.5px;line-height:2.15;color:#1f2942;
   font-weight:700;padding-bottom:54px}
-.sample .body p{margin-bottom:15px}
+.sample .body p{margin-bottom:13px;text-indent:1em}
+.sample .body p.ni{text-indent:0}
 .sample .body .hit{font-size:19px;color:#152342}
 .sample .veil{position:absolute;left:0;right:0;bottom:0;height:118px;
-  background:linear-gradient(180deg,rgba(253,248,236,0),rgba(253,248,236,.94) 55%,#fdf8ec 100%);
+  background:linear-gradient(180deg,rgba(250,244,228,0),rgba(250,244,228,.94) 55%,#faf4e4 100%);
   pointer-events:none}
-.samplefoot{margin-top:16px;text-align:center;font-size:15px;color:var(--muted);
+.samplefoot{margin-top:22px;text-align:center;font-size:15px;color:var(--muted);
   line-height:1.95;font-weight:500}
 
 /* ---- 特典 ---- */
@@ -287,20 +306,24 @@ html.js .rv.in{opacity:1;transform:none}
   <p class="eyebrow">試し読み</p>
   <h2>はじめの数ページを、<br>ここで</h2>
   <div class="sample">
-    <div class="ch">プロローグ　お金の話、子どもにどう伝えていますか</div>
+    <div class="runhead">子どもにお金の話をしよう</div>
+    <div class="chapopen">
+      <div class="cn">プロローグ</div>
+      <div class="ct">お金の話、<br>子どもにどう伝えていますか</div>
+    </div>
     <div class="body">
-      <p class="hit">「将来、バスケで海外に行きたい！」</p>
+      <p class="hit ni">「将来、バスケで海外に行きたい！」</p>
       <p>長男が、そう言いました。僕が30歳のときです。</p>
       <p>夕飯の途中でした。ごはんをかき込みながら、当たり前みたいな顔で言うんです。</p>
-      <p>「将来、NBAの選手になる。だから、バスケで海外に留学したい」</p>
+      <p class="ni">「将来、NBAの選手になる。だから、バスケで海外に留学したい」</p>
       <p>箸が、一瞬止まりました。</p>
-      <p>「へえ、いいな」</p>
+      <p class="ni">「へえ、いいな」</p>
       <p>僕はそう答えました。父親として、たぶん満点の顔で。</p>
       <p>でも頭の中では、電卓を叩いていました。</p>
       <p>留学って、いくらかかるんだ。年に100万か、200万か。</p>
       <p>計算は、途中でやめました。</p>
       <p>答えが出たら、「いいな」と言ったさっきの自分が、嘘になる気がしたからです。</p>
-      <p class="hit">このままの自分では、この子の夢の、観客席にも座れない。</p>
+      <p class="hit ni">このままの自分では、この子の夢の、観客席にも座れない。</p>
     </div>
     <div class="veil"></div>
   </div>
